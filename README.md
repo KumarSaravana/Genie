@@ -2,4 +2,4 @@
 
 
 # Deploy to
-https://hroku.com/deploy
+https://heroku.com/deploy
