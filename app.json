@@ -1,7 +1,7 @@
 {
-  "name": "API.AI webhook demonstration",
-  "description": "API.AI webhook demonstration",
+  "name": "Genie webhook demonstration",
+  "description": "Genie webhook demonstration",
   "repository": "https://github.com/KumarSaravana/Genie",
   "logo": "http://xvir.github.io/img/apiai.png",
-  "keywords": ["api.ai", "natural language"]
+  "keywords": ["Genie", "natural language"]
 }
