@@ -73,4 +73,4 @@ def func_api():
         "source": "https://github.com/KumarSaravana/Genie"
     }
 
-func_api();
+#func_api();
