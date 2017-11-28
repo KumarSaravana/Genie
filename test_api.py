@@ -1,33 +1,76 @@
-# -*- coding:utf8 -*-
-# !/usr/bin/env python
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+def func_api():
+    import requests
+    import xml.etree.ElementTree as ET
+    from xml.dom import minidom
+    url='http://chdsez297507d.ad.infosys.com:9502/analytics/saw.dll?SoapImpl=nQSessionService'
+    headers = {"Content-Type": "text/xml"}
+    body = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v6="urn://oracle.bi.webservices/v6">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <v6:logon>
+             <v6:name>Infosys</v6:name>
+             <v6:password>infosys123</v6:password>
+          </v6:logon>
+       </soapenv:Body>
+    </soapenv:Envelope>"""
 
-import requests
+    #Parse response
+    response = requests.post(url,data=body,headers=headers)
+    #print (response.content)
 
-url='http://chdsez297507d.ad.infosys.com:9502/analytics/saw.dll?SoapImpl=nQSessionService'
-headers = {"Content-Type": "text/xml"}
-body = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v6="urn://oracle.bi.webservices/v6">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <v6:logon>
-         <v6:name>Infosys</v6:name>
-         <v6:password>infosys123</v6:password>
-      </v6:logon>
-   </soapenv:Body>
-</soapenv:Envelope>"""
+    tree = ET.fromstring(response.content)
 
-response = requests.post(url,data=body,headers=headers)
-print (response.content)
+    url='http://chdsez297507d.ad.infosys.com:9502/analytics/saw.dll?SoapImpl=webCatalogService'
+    sessionID=tree.find('.//{urn://oracle.bi.webservices/v6}sessionID').text
 
 
+    getSubItems_body="""<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v6="urn://oracle.bi.webservices/v6">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <v6:getSubItems>
+             <v6:path>/shared</v6:path>
+             <v6:mask></v6:mask>
+             <v6:resolveLinks></v6:resolveLinks>
+             <v6:options>
+                <v6:filter>
+                   <!--Zero or more repetitions:-->
+                   <v6:itemInfoFilters>
+                      <v6:name></v6:name>
+                      <v6:value></v6:value>
+                   </v6:itemInfoFilters>
+                   <v6:dummy></v6:dummy>
+                </v6:filter>
+                <v6:includeACL></v6:includeACL>
+                <v6:withPermission></v6:withPermission>
+                <v6:withPermissionMask></v6:withPermissionMask>
+                <v6:withAttributes></v6:withAttributes>
+                <v6:withAttributesMask></v6:withAttributesMask>
+             </v6:options>
+             <v6:sessionID>"""+sessionID+"""</v6:sessionID>
+          </v6:getSubItems>
+       </soapenv:Body>
+    </soapenv:Envelope>"""
+
+    response = requests.post(url,data=getSubItems_body,headers=headers)
+    tree = ET.fromstring(response.content)   
+
+    #print (response.content)
+
+    path=tree.find('.//{urn://oracle.bi.webservices/v6}path').text
+
+    print(path)
+
+    speech = "Report path is " + path
+
+    print("Response:")
+    print(speech)
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        # "contextOut": [],
+        "source": "https://github.com/KumarSaravana/Genie"
+    }
+
+func_api();
