@@ -34,7 +34,7 @@ def webhook():
     return r
 
 def processRequest(req):
-    if req.get("result").get("action") != "genieRepSearch":
+    if req.get("result").get("action") != "yahooWeatherForecast":
         return {}
     #baseurl = "https://query.yahooapis.com/v1/public/yql?"
     query = func_api()
