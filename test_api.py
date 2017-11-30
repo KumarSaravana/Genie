@@ -31,13 +31,14 @@ def webhook():
     print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
-    return r
+    return res
 
 def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         return {}
     #baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    query = func_api()
+    query = "Hi World"
+    #func_api()
     #if yql_query is None:
     #    return {}
     #yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
