@@ -56,7 +56,7 @@ def processRequest(req):
     #result = urlopen(yql_url).read()
     #data = json.loads(result)
     #res = makeWebhookResult(data)
-    return query
+    #return query
 
 def func_api():
     url='http://chdsez297507d.ad.infosys.com:9502/analytics/saw.dll?SoapImpl=nQSessionService'
