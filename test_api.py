@@ -11,6 +11,10 @@ from urllib.error import HTTPError
 import json
 import os
 
+import requests
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
+
 from flask import Flask
 from flask import request
 from flask import make_response
@@ -38,6 +42,13 @@ def processRequest(req):
         return {}
     #baseurl = "https://query.yahooapis.com/v1/public/yql?"
     query = "Hi World"
+    return {
+        "speech": query,
+        "displayText": query,
+        # "data": data,
+        # "contextOut": [],
+        "source": "https://github.com/KumarSaravana/Genie"
+    }
     #func_api()
     #if yql_query is None:
     #    return {}
@@ -48,9 +59,6 @@ def processRequest(req):
     return query
 
 def func_api():
-    import requests
-    import xml.etree.ElementTree as ET
-    from xml.dom import minidom
     url='http://chdsez297507d.ad.infosys.com:9502/analytics/saw.dll?SoapImpl=nQSessionService'
     headers = {"Content-Type": "text/xml"}
     body = """<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v6="urn://oracle.bi.webservices/v6">
